@@ -38,7 +38,6 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int id,int target_nu
     models.reserve(num_agents);
 //            all_targets[0].StateSubscriber = n.subscribe("/bot/pose",10,&Target::stateCallback,&all_targets[0]);
 
-    effectiveness.push_back(0.0f);
     float desired=0.;  // Desired Pk
     all_targets.push_back(Target("bot/pose",desired));  // Initialize null target
     for(int t=1;t<=num_targets;t++) {  // from 1 to num_targets because goal0 is for null target
@@ -54,19 +53,16 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int id,int target_nu
         }
         all_targets.push_back(Target(m_poseTopic, desired));
         //all_targets[t+1].StateSubscriber = n.subscribe(m_poseTopic,10,&Target::stateCallback,&all_targets[t+1]);
-        effectiveness.push_back(0.5f);
     }
-
-    //all_targets[2].desired_pk = 0.7;
 
     for (int a=0;a<num_agents;a++)
     {
         //Model tmp_model;
         //models.push_back(tmp_model);
 
-        std::ostringstream dumba;
-        dumba << a;
-        std::string a_str(dumba.str());
+        std::ostringstream id_str_tmp;
+        id_str_tmp << a;
+        std::string a_str(id_str_tmp.str());
         ros::Subscriber tmp_sub;
         state_msg_subscriptions.push_back(tmp_sub);
 
