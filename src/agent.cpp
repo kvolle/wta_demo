@@ -75,7 +75,6 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int id,int target_nu
         {
             m_poseTopic = "bot/pose";
             state_msg_subscriptions[a] = n.subscribe(m_poseTopic,10,&Agent::ownPositionCallback,this);
-            //ownPositionSubscriber = n.subscribe(m_poseTopic,10,&Agent::ownPositionCallback,this);
         }
     }
     publisher = n.advertise<wta_demo::StateMsg>("state",1000);

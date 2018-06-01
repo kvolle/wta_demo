@@ -60,7 +60,6 @@ class Agent {
         std::vector<ros::Subscriber> state_msg_subscriptions; /**< A vector of subscribers to the other turtlebots in the environment */
         float max_cost; /**< TBD - KYLE */
 
-        ros::Subscriber ownPositionSubscriber; /**< TBD - KYLE */
         ros::Subscriber hardwareSubscriber; /**< TBD - KYLE */
         ros::Publisher publisher; /**< Publishes this agent's state message */
         Location actual_goal; /**< The location of the agent's selected target */
