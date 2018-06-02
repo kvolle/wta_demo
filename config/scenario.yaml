@@ -1,8 +1,8 @@
-scenario: { names : [/robot0, /robot1\]
-	initialTargets : {/robot0 : /goal0, /robot1 : /goal0},
-	effectiveness  : {
-				/robot0 : [0.0, 0.50, 0.25],
-				/robot1 : [0.0, 0.25, 0.50]
-			 },
-	desired_pk     : {/goal0: 0.0, /goal1: 0.60, /goal2 : 0.60}
+scenario: { names : [/robot0, /robot1\],
+   initialTargets : {robot0 : goal0, robot1 : goal0},
+   effectiveness  : {
+          robot0 : [0.0, 0.50, 0.25],
+          robot1 : [0.0, 0.25, 0.50]
+  },
+  desired_pk     : {goal0: 0.0, goal1: 0.60, goal2 : 0.60}
 }
