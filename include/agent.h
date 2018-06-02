@@ -65,6 +65,7 @@ class Agent {
         Location actual_goal; /**< The location of the agent's selected target */
         ros::Publisher desired_state; /**< The position of the agent's desired target */
         geometry_msgs::TransformStamped desired_state_msg; /**< TBD - KYLE */
+        std::string desired_state_handle;  /**< String containing name of desired state topic */
         std::vector<float> effectiveness; /**< TBD - KYLE */
 
         Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int id,int target_number,int agent_number);  /**<Constructor of Agent class */
