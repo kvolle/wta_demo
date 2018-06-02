@@ -47,9 +47,9 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int id,int target_nu
         std::string t_str(target_id.str());
         std::string name_goal = "/goal" + t_str;
         m_poseTopic = name_goal + "/goal/pose";
-        if (!n.getParam("scenario/desired_pk"+name_goal,desired)) {
+        if (!n.getParam("/scenario/desired_pk"+name_goal,desired)) {
             desired = 0.;
-            std::cerr << "Parameter was not found: Pk_d of " << name_goal;
+            std::cerr << "Parameter was not found: Pk_d of " << name_goal << std::endl;
         }
         all_targets.push_back(Target(m_poseTopic, desired));
         //all_targets[t+1].StateSubscriber = n.subscribe(m_poseTopic,10,&Target::stateCallback,&all_targets[t+1]);
@@ -75,10 +75,13 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int id,int target_nu
         {
             m_poseTopic = "bot/pose";
             state_msg_subscriptions[a] = n.subscribe(m_poseTopic,10,&Agent::ownPositionCallback,this);
+            if (!n.getParam("/scenario/effectiveness/robot"+ a_str,this->effectiveness)) {
+                    std::cerr << "Parameter was not found: Effectiveness of /robot" << a_str << std::endl;
+                    this->effectiveness.resize(all_targets.size(),0.);
+            }
         }
     }
     publisher = n.advertise<wta_demo::StateMsg>("state",1000);
-   // std::cout<<publisher.getTopic()<<std::endl;
     pk_from_model();
     max_cost = cost_function(pk_on_targets);
 }
