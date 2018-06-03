@@ -143,7 +143,8 @@ void Agent::stateCallback(const wta_demo::StateMsg::ConstPtr& pose)
 */
 void Agent::hardwareStateCallback(const kobuki_msgs::RobotStateEvent::ConstPtr& state)
 {
-    //ready = (state->state == 1);
+    ready = (state->state == 1);
+    this->models[this->id].ready = this->ready;
 }
 
 /**
@@ -295,7 +296,7 @@ void Agent::decision_function()
 
         // Go through each potential target and calculate the cost function for that assignment
         // When this for-loop exits, the minimum cost target will be selected. Will not be worse than current assignment
-        /*for (uint t=0;t<all_targets.size();t++)
+        for (uint t=0;t<all_targets.size();t++)
         {
             result_pk = pk_on_targets;
             tmp_attrition = attrition_estimate(t);
@@ -310,7 +311,7 @@ void Agent::decision_function()
                 min_cost = plan_cost;
                 new_target = t;
             }
-         }*/
+         }
         //printf("Selected target %d with cost of %5.4f\n",new_target,min_cost);
         //actual_goal = all_targets[new_target].location_marker;
         models[id].target_id = new_target;
