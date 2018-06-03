@@ -190,8 +190,8 @@ void Agent::broadcast()
  * Author:  Kyle Volle
  * @details This function takes the model built up from communication and creates an estimate of Pk against all targets.
  */
-void Agent::pk_from_model()
-{
+void Agent::pk_from_model() {
+    /*
     pk_on_targets.clear();
     //pk_on_targets.resize(all_targets.size(),0.0f);
     for (uint t=0;t<pk_on_targets.size();t++)
@@ -206,6 +206,14 @@ void Agent::pk_from_model()
             }
             //models[a].ready = false;
         }
+    }
+    */
+    float eff = 0.6;
+    pk_on_targets.clear();
+    pk_on_targets.resize(all_targets.size(),0.0);
+    for (uint a=0; a < models.size(); a++) {
+        //pk_on_targets[models[a].target_id] = 1.0 - (1.0-pk_on_targets[models[a].target_id])*(1 - models[a].effectiveness + models[a].effectiveness*models[a].attrition_estimate);
+        pk_on_targets[models[a].target_id] = 1.0 - (1.0-pk_on_targets[models[a].target_id])*(1 - eff + eff*models[a].attrition_estimate);
     }
 }
 
