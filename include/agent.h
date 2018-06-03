@@ -34,6 +34,7 @@ struct Target {
 struct Model {
         Location position;  /**< TBD */
         int target_id;  /**< TBD */
+        float effectiveness;
         int confidence_index;  /**< TBD */
         float attrition_estimate;  /**< TBD */
         bool ready;  /**< TBD */

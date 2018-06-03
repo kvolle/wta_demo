@@ -128,7 +128,7 @@ void Agent::stateCallback(const wta_demo::StateMsg::ConstPtr& pose)
         models[pose->agent_id].ready = pose->ready;
         models[pose->agent_id].target_id = pose->target_id;
         models[pose->agent_id].attrition_estimate = pose->attrition_estimate;
-        //models[pose->agent_id].effectiveness = pose->effectiveness;
+        models[pose->agent_id].effectiveness = pose->effectiveness;
         models[pose->agent_id].heartbeats=0;
       std::cout<<"agent ID  "<<pose->agent_id<<std::endl;
       std::cout<<"models.ready in stateCallback  "<<models[pose->agent_id].ready<<std::endl;
@@ -174,7 +174,7 @@ void Agent::broadcast()
     msg.ready = ready;
     msg.target_id = models[id].target_id;
     msg.attrition_estimate = models[id].attrition_estimate;
-    //msg.effectiveness = models[id].effectiveness;
+    msg.effectiveness = models[id].effectiveness;
     // This commented out section is for the daisy chaining of messages, which may or may not be implemented eventually
     /*
     for (uint a = 0;a<models.size();a++)
@@ -210,12 +210,10 @@ void Agent::pk_from_model() {
         }
     }
     */
-    float eff = 0.6;
     pk_on_targets.clear();
     pk_on_targets.resize(all_targets.size(),0.0);
     for (uint a=0; a < models.size(); a++) {
-        //pk_on_targets[models[a].target_id] = 1.0 - (1.0-pk_on_targets[models[a].target_id])*(1 - models[a].effectiveness + models[a].effectiveness*models[a].attrition_estimate);
-        pk_on_targets[models[a].target_id] = 1.0 - (1.0-pk_on_targets[models[a].target_id])*(1 - eff + eff*models[a].attrition_estimate);
+        pk_on_targets[models[a].target_id] = 1.0 - (1.0-pk_on_targets[models[a].target_id])*(1 - models[a].effectiveness + models[a].effectiveness*models[a].attrition_estimate);
     }
 }
 
@@ -326,7 +324,7 @@ void Agent::decision_function()
         //actual_goal = all_targets[new_target].location_marker;
         models[id].target_id = new_target;
         models[id].attrition_estimate = attrition_estimate(new_target);
-        //models[i].effectiveness = effectiveness[new_target];
+        models[id].effectiveness = effectiveness[new_target];
 
         // publish my ready flag
     ready = 1;
