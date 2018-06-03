@@ -286,15 +286,13 @@ void Agent::simulated_annealing()
 void Agent::decision_function()
 {
     // First check that all surviving agents are in full mode
-    //bool ready_check = ready;
-    //for (uint a=0;a<num_agents;a++)
-    //{
-    //    ready_check = ready_check & models[a].ready;
-    //}
+    bool ready_check = ready;
+    for (uint a=0;a<num_agents;a++) {
+        ready_check = ready_check & models[a].ready;
+    }
     // This function takes the model made from messages and calculates the Pk
     pk_from_model();
-    //if(ready_check)
-    //{
+    if(ready_check) {
         float plan_cost, min_cost,tmp_attrition;
         int new_target;
         std::vector<float> result_pk = pk_on_targets;
@@ -325,7 +323,8 @@ void Agent::decision_function()
         models[id].target_id = new_target;
         models[id].attrition_estimate = attrition_estimate(new_target);
         models[id].effectiveness = effectiveness[new_target];
-
+    }
+    /*
         // publish my ready flag
     ready = 1;
     int ready_check = ready;
@@ -338,18 +337,17 @@ void Agent::decision_function()
                     }
         }
         std::cout<<"ready_check   "<<ready_check<<std::endl;
+        */
         // subscribe to StateMsg and get ready flag
 
         // check if ready flag is set to true in all agents
         // if that is true {
-    if(ready_check)
-    {
+    if(ready_check)  {
         // Publish the location the selected target
         desired_state_msg.transform.translation.x = actual_goal.x_pos;
         desired_state_msg.transform.translation.y = actual_goal.y_pos;
         desired_state.publish(desired_state_msg);
     }
-    //}
 }
 
 /**
