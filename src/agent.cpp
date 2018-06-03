@@ -173,6 +173,7 @@ void Agent::broadcast()
     msg.ready = ready;
     msg.target_id = models[id].target_id;
     msg.attrition_estimate = models[id].attrition_estimate;
+    //msg.effectiveness = models[id].effectiveness;
     // This commented out section is for the daisy chaining of messages, which may or may not be implemented eventually
     /*
     for (uint a = 0;a<models.size();a++)
