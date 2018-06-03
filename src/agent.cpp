@@ -313,7 +313,7 @@ void Agent::decision_function()
             //std::cout << "Goal "<< t << " Plan: " << result_pk[0] << "  " <<result_pk[1] << "  "  << result_pk[2] << std::endl;
             //std::cout << "Target of Bot1: " << models[1].target_id << " Target of Bot0: " << models[0].target_id << std::endl;
 
-            plan_cost = cost_function_tiers(result_pk); // or: cost_function(result_pk); //cost_function_tiers(result_pk);
+            plan_cost = cost_function(result_pk); // or: cost_function(result_pk); //cost_function_tiers(result_pk);
             if (plan_cost < min_cost)
             {
                 min_cost = plan_cost;
@@ -324,6 +324,7 @@ void Agent::decision_function()
         //actual_goal = all_targets[new_target].location_marker;
         models[id].target_id = new_target;
         models[id].attrition_estimate = attrition_estimate(new_target);
+        //models[i].effectiveness = effectiveness[new_target];
 
         // publish my ready flag
     ready = 1;
