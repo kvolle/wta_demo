@@ -397,10 +397,10 @@ float Agent::cost_function(std::vector<float> & pk)
     float cost = 0.0f;
     for (uint t=0;t<pk.size();t++)
     {
-        /*if(pk[t]<all_targets[t].desired_pk)
+        if(pk_on_targets[t]<all_targets[t].desired_pk)
         {
-            cost+=(all_targets[t].desired_pk - pk[t])/(1-all_targets[t].desired_pk);
-        }*/
+            cost+=(all_targets[t].desired_pk - pk_on_targets[t])/(1-all_targets[t].desired_pk);
+        }
     }
     return cost;
 }
