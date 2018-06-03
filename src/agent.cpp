@@ -128,6 +128,7 @@ void Agent::stateCallback(const wta_demo::StateMsg::ConstPtr& pose)
         models[pose->agent_id].ready = pose->ready;
         models[pose->agent_id].target_id = pose->target_id;
         models[pose->agent_id].attrition_estimate = pose->attrition_estimate;
+        //models[pose->agent_id].effectiveness = pose->effectiveness;
         models[pose->agent_id].heartbeats=0;
       std::cout<<"agent ID  "<<pose->agent_id<<std::endl;
       std::cout<<"models.ready in stateCallback  "<<models[pose->agent_id].ready<<std::endl;
