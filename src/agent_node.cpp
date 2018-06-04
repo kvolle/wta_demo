@@ -59,7 +59,7 @@ int main(int argc, char **argv)
 
     if (!n_private.getParam("bot_id", BOT_ID))
     {
-        //std::cout <<"Couldn't get bot_id, setting default..." <<std::endl;
+        std::cout <<"Couldn't get bot_id, setting default..." <<std::endl;
         BOT_ID = "robot0";
     }
 
@@ -83,7 +83,6 @@ int main(int argc, char **argv)
     Agent agent(n,n_private,atoi(tmp.c_str()),NUM_GOALS,NUM_BOTS);
     std::cout << "Agent created\n";
     ros::Rate loop_rate(10);
-    srand(time(NULL));
     while (ros::ok())
     {
 
