@@ -84,10 +84,10 @@ int main(int argc, char **argv)
     srand(time(NULL));
     while (ros::ok())
     {
-/*
+
         agent.broadcast();
-        agent.desired_state.publish(agent.desired_state_msg);
-        std::cout<<"ready"<<agent.ready<<std::endl;
+//        agent.desired_state.publish(agent.desired_state_msg);
+//        std::cout<<"ready"<<agent.ready<<std::endl;  //
         //if (agent.ready)
         //{
             // This rand() function is to prevent a race condition resulting in agents alternating quickly
@@ -98,7 +98,7 @@ int main(int argc, char **argv)
             //}
         //printf("xpos: %4.3f\nypos: %4.3f\ntarget: %d\n",agent.models[agent.id].position.x_pos,agent.models[agent.id].position.y_pos,agent.models[agent.id].target_id);
         //}
-
+/*
         // If another agent hasn't been heard from in 6 cycles, assume it is dead
         for (uint a=0;a<NUM_BOTS;a++)
         {
