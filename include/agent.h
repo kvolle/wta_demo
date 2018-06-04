@@ -6,6 +6,7 @@
 #include "string"
 #include "ros/ros.h"
 #include "ros/subscriber.h"
+#include "ros/subscription.h"
 #include "ros/publisher.h"
 #include "wta_demo/StateMsg.h"
 
@@ -68,6 +69,9 @@ class Agent {
         geometry_msgs::TransformStamped desired_state_msg; /**< TBD - KYLE */
         std::string desired_state_handle;  /**< String containing name of desired state topic */
         std::vector<float> effectiveness; /**< TBD - KYLE */
+
+        ros::Subscriber goalPoseSubscriber; /** < Listens to the current goal **/
+        void goalPoseCallback(const geometry_msgs::TransformStamped::ConstPtr &);
 
         Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int id,int target_number,int agent_number);  /**<Constructor of Agent class */
         ~Agent();  /**< Destructor of Agent class */

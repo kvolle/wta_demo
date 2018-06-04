@@ -84,7 +84,14 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int id,int target_nu
     publisher = n.advertise<wta_demo::StateMsg>("state",1000);
     pk_from_model();
     max_cost = cost_function(pk_on_targets);
+    //subscribeToTopic(this->goalPoseSubscriber, all_targets[this->target_id].topic, &goalPoseCallback);
+    goalPoseSubscriber = m_n.subscribe(all_targets[models[id].target_id].topic, 10, &Agent::goalPoseCallback, this);
 }
+void Agent::goalPoseCallback(const geometry_msgs::TransformStamped::ConstPtr &desired_pose) {
+    desired_state_msg = *desired_pose;
+    desired_state.publish(desired_state_msg);
+}
+
 /**
 * Author:  Kyle Volle
 * @details Takes the pose of this bot and stores the x-axis and y-axis values as well as
@@ -272,9 +279,12 @@ void Agent::simulated_annealing()
         models[id].attrition_estimate = attrition_estimate(new_target);
 
         // Publish the location the selected target
+        /*
         desired_state_msg.transform.translation.x = actual_goal.x_pos;
         desired_state_msg.transform.translation.y = actual_goal.y_pos;
         desired_state.publish(desired_state_msg);
+        */
+        //goalPoseSubscriber = n.subscribe(all_targets[models[id].target_id].topic, 10, &Agent::goalPoseCallback, this);
     }
 }
 
@@ -323,6 +333,7 @@ void Agent::decision_function()
         models[id].target_id = new_target;
         models[id].attrition_estimate = attrition_estimate(new_target);
         models[id].effectiveness = effectiveness[new_target];
+        goalPoseSubscriber = m_n.subscribe(all_targets[models[id].target_id].topic, 10, &Agent::goalPoseCallback, this);
     }
     /*
         // publish my ready flag
@@ -342,12 +353,12 @@ void Agent::decision_function()
 
         // check if ready flag is set to true in all agents
         // if that is true {
-    if(ready_check)  {
+    /*if(ready_check)  {
         // Publish the location the selected target
         desired_state_msg.transform.translation.x = actual_goal.x_pos;
         desired_state_msg.transform.translation.y = actual_goal.y_pos;
         desired_state.publish(desired_state_msg);
-    }
+    }*/
 }
 
 /**
