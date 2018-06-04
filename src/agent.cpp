@@ -27,10 +27,10 @@
 * @param [in] target_number The number of targets in the environment
 * @param [in] agent_number The number of agents in the environment
 */
-Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int id,int target_number,int agent_number):ready(false)
+Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int _id,int target_number,int agent_number):ready(false),id(_id)
 {
-    num_targets = target_number;
     num_agents = agent_number;
+    num_targets = target_number;
     std::string m_poseTopic;
     desired_state = m_n.advertise<geometry_msgs::TransformStamped>("desired_state/pose",1000);
     hardwareSubscriber = n.subscribe("mobile_base/events/robot_state",10,&Agent::hardwareStateCallback,this);
@@ -88,6 +88,7 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int id,int target_nu
     goalPoseSubscriber = m_n.subscribe(all_targets[models[id].target_id].topic, 10, &Agent::goalPoseCallback, this);
 }
 void Agent::goalPoseCallback(const geometry_msgs::TransformStamped::ConstPtr &desired_pose) {
+    std::cout<<"GoalPose\n";
     desired_state_msg = *desired_pose;
     desired_state.publish(desired_state_msg);
 }
@@ -99,8 +100,7 @@ void Agent::goalPoseCallback(const geometry_msgs::TransformStamped::ConstPtr &de
 *
 * @param [in] pose The turtlebot's position in the environment
 */
-void Agent::ownPositionCallback(const geometry_msgs::TransformStamped::ConstPtr& pose)
-{
+void Agent::ownPositionCallback(const geometry_msgs::TransformStamped::ConstPtr& pose) {
     // location_marker is probably redundant
     location_marker.x_pos = pose->transform.translation.x;
     location_marker.y_pos = pose->transform.translation.y;
@@ -125,8 +125,7 @@ Agent::~Agent()
 *
 * @param [in] pose A custom state message from one of the other bots
 */
-void Agent::stateCallback(const wta_demo::StateMsg::ConstPtr& pose)
-{
+void Agent::stateCallback(const wta_demo::StateMsg::ConstPtr& pose) {
     // This function should only be used for receiving messages that this bot didn't publish
     if (pose->agent_id != id)
     {
@@ -149,8 +148,7 @@ void Agent::stateCallback(const wta_demo::StateMsg::ConstPtr& pose)
 *
 * @param [in] state The turtlebot's current state in the environment
 */
-void Agent::hardwareStateCallback(const kobuki_msgs::RobotStateEvent::ConstPtr& state)
-{
+void Agent::hardwareStateCallback(const kobuki_msgs::RobotStateEvent::ConstPtr& state) {
     ready = (state->state == 1);
     this->models[this->id].ready = this->ready;
 }
