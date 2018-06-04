@@ -1,0 +1,19 @@
+<!---->
+<launch>
+	
+
+	<!--Launch File Specifier -->
+	<rosparam command="load" file="$(find wta_demo)/config/scenario.yaml"/>
+	<group ns="$(arg name)">
+		<node pkg="wta_demo" type="wta_demo" name="agent" output="log">
+
+		<!-- Instructions:-->			
+		<!-- Enter three parameters into the following fields: 
+			1. BOT_ID (string) = the id of this bot... e.g. bot0, bot1, ...botn
+			2. NUM_GOALS (int) = the number of goals that are in the environment
+			3. NUM_BOTS (int)  = the number of agents (turtlebots or other) that are in the environment, total (including this one)
+									-->
+			<param name="bot_id" value="$(arg name)" type="str"/> <!-- CHANGE THE ENTRY IN THE QUOTES FOR VALUE -->
+		</node>
+	</group>
+</launch>
