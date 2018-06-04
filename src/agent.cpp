@@ -148,8 +148,8 @@ void Agent::stateCallback(const wta_demo::StateMsg::ConstPtr& pose) {
 *
 * @param [in] state The turtlebot's current state in the environment
 */
-void Agent::hardwareStateCallback(const kobuki_msgs::RobotStateEvent::ConstPtr& state) {
-    ready = (state->state == 1);
+void Agent::hardwareStateCallback(const kobuki_msgs::RobotStateEvent::ConstPtr& hw_state) {
+    ready = (hw_state->state == 1);
     this->models[this->id].ready = this->ready;
 }
 
