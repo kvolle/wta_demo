@@ -2,7 +2,7 @@
 <launch>
 	<group ns="$(arg name)">
 		<param name="tf_prefix" value="'$(arg name)"/> <!-- Not sure if this is used-->
-	<node pkg="ros_vrpn_client" type="ros_vrpn_client" name="bot" args="_vrpn_server_ip:=10.251.72.120" output="screen" required="true"/>
+	<node pkg="ros_vrpn_client" type="ros_vrpn_client" name="bot" args="_vrpn_server_ip:=192.168.1.104" output="screen" required="true"/>
 
 	<include file="$(find bot_pid_kobuki)/launch/kobuki_minimal.launch">
 		<arg name="name" value="$(arg name)"/>
