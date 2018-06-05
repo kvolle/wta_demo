@@ -4,12 +4,13 @@
 		<param name="tf_prefix" value="'$(arg name)"/> <!-- Not sure if this is used-->
 	<node pkg="ros_vrpn_client" type="ros_vrpn_client" name="bot" args="_vrpn_server_ip:=10.251.72.120" output="screen" required="true"/>
 
-	<include file="$(find bot_pid_kobuki)/launch/kobuki_minimal.launch" ns="$(arg name)"/>
-	<node pkg="bot_pid_kobuki" type="bot_pid_kobuki_node" name="bot_pid_kobuki" output="screen">
+	<include file="$(find bot_pid_kobuki)/launch/kobuki_minimal.launch">
+		<arg name="name" value="$(arg name)"/>
+	</include>
 		<param name="pose_topic" value="bot/ned/pose"/>
 		<param name="pose_desired_topic" value="desired_state/pose"/>
-	</node>
+<!--	</node>-->
 
-	<include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml"/>
+<!--	<include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml"/>-->
 	</group>
 </launch>
