@@ -36,10 +36,10 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int _id,int target_n
     hardwareSubscriber = n.subscribe("mobile_base/events/robot_state",10,&Agent::hardwareStateCallback,this);
     all_targets.reserve(num_targets + 1);
     models.reserve(num_agents);
-//            all_targets[0].StateSubscriber = n.subscribe("/bot/pose",10,&Target::stateCallback,&all_targets[0]);
+//            all_targets[0].StateSubscriber = n.subscribe("/bot/ned/pose",10,&Target::stateCallback,&all_targets[0]);
 
     float desired=0.;  // Desired Pk
-    all_targets.push_back(Target("bot/pose",desired));  // Initialize null target
+    all_targets.push_back(Target("bot/ned/pose",desired));  // Initialize null target
     for(int t=1;t<=num_targets;t++) {  // from 1 to num_targets because goal0 is for null target
         //subscribe to goal pose
         std::ostringstream target_id;
@@ -51,6 +51,7 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int _id,int target_n
             desired = 0.;
             std::cerr << "Parameter was not found: Pk_d of " << name_goal << std::endl;
         }
+        std::cout << "\t&&&&" << m_poseTopic << " " << desired << "\n";
         all_targets.push_back(Target(m_poseTopic, desired));
         //all_targets[t+1].StateSubscriber = n.subscribe(m_poseTopic,10,&Target::stateCallback,&all_targets[t+1]);
     }
@@ -173,7 +174,7 @@ void Agent::hardwareStateCallback(const kobuki_msgs::RobotStateEvent::ConstPtr& 
 void Agent::subscribeToTopic(ros::Subscriber sub,std::string m_poseTopic)
 {
     //StateSubscriber= m_n.subscribe(m_poseTopic, 10, &Agent::stateCallback,this);
-    sub = m_n.subscribe("bot/pose",10,&Agent::ownPositionCallback,this);
+    sub = m_n.subscribe("bot/ned/pose",10,&Agent::ownPositionCallback,this);
 }
 
 /**
