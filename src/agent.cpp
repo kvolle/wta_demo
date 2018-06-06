@@ -54,11 +54,11 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int _id,int target_n
         all_targets.push_back(Target(m_poseTopic, desired));
         //all_targets[t+1].StateSubscriber = n.subscribe(m_poseTopic,10,&Target::stateCallback,&all_targets[t+1]);
     }
-
+    Model tmp_model;
     for (int a=0;a<num_agents;a++)
     {
-        //Model tmp_model;
-        //models.push_back(tmp_model);
+
+        models.push_back(tmp_model);
 
         std::ostringstream id_str_tmp;
         id_str_tmp << a;
