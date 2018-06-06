@@ -46,7 +46,7 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int _id,int target_n
         target_id << t;
         std::string t_str(target_id.str());
         std::string name_goal = "/goal" + t_str;
-        m_poseTopic = name_goal + "/goal/pose";
+        m_poseTopic = name_goal + "/goal_pose";
         if (!n.getParam("/scenario/desired_pk"+name_goal,desired)) {
             desired = 0.;
             std::cerr << "Parameter was not found: Pk_d of " << name_goal << std::endl;
