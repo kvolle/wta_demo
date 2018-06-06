@@ -305,7 +305,7 @@ void Agent::decision_function()
         int new_target;
         std::vector<float> result_pk = pk_on_targets;
         new_target= models[id].target_id;
-        min_cost = cost_function_tiers(result_pk); // cost_function(result_pk) or:cost_function_tiers(result_pk); // changed to without tiers June 09, 2016
+        min_cost = cost_function(result_pk); // cost_function(result_pk) or:cost_function_tiers(result_pk); // changed to without tiers June 09, 2016
 
 
         // Go through each potential target and calculate the cost function for that assignment
