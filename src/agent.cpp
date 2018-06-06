@@ -136,6 +136,16 @@ void Agent::stateCallback(const wta_demo::StateMsg::ConstPtr& pose) {
         models[pose->agent_id].attrition_estimate = pose->attrition_estimate;
         models[pose->agent_id].effectiveness = pose->effectiveness;
         models[pose->agent_id].heartbeats=0;
+        for (unsigned int a=0; a < models.size(); a++) {
+            std::cout << models[a].target_id << " ";
+        }
+        std::cout << std::endl;
+
+        pk_from_model();
+        for (unsigned int t=0; t < pk_on_targets.size(); t++) {
+            std::cout << pk_on_targets[t] << " ";
+        }
+        std::cout << std::endl;
       //std::cout<<"agent ID  "<<pose->agent_id<<std::endl;
       //std::cout<<"models.ready in stateCallback  "<<models[pose->agent_id].ready<<std::endl;
     }
