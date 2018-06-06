@@ -73,7 +73,7 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int _id,int target_n
         }
         else
         {
-            m_poseTopic = "bot/pose";
+            m_poseTopic = "bot/ned/pose";
             state_msg_subscriptions[a] = n.subscribe(m_poseTopic,10,&Agent::ownPositionCallback,this);
             if (!n.getParam("/scenario/effectiveness/robot"+ a_str,this->effectiveness)) {
                     std::cerr << "Parameter was not found: Effectiveness of /robot" << a_str << std::endl;
