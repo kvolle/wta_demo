@@ -86,7 +86,7 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int _id,int target_n
     pk_from_model();
     max_cost = cost_function(pk_on_targets);
     //subscribeToTopic(this->goalPoseSubscriber, all_targets[this->target_id].topic, &goalPoseCallback);
-    goalPoseSubscriber = m_n.subscribe(all_targets[models[id].target_id].topic, 10, &Agent::goalPoseCallback, this);
+    //goalPoseSubscriber = m_n.subscribe(all_targets[models[id].target_id].topic, 10, &Agent::goalPoseCallback, this);
 }
 void Agent::goalPoseCallback(const geometry_msgs::TransformStamped::ConstPtr &desired_pose) {
     std::cout<<"GoalPose\n";
@@ -342,9 +342,9 @@ void Agent::decision_function()
         models[id].target_id = new_target;
         models[id].attrition_estimate = attrition_estimate(new_target);
         models[id].effectiveness = effectiveness[new_target];
-        std::cout << "~~~~~~~~~~~~~~~~~~~~  " << all_targets[models[id].target_id].topic << "\n";
+     //   std::cout << "~~~~~~~~~~~~~~~~~~~~  " << all_targets[models[id].target_id].topic << "\n";
         goalPoseSubscriber = m_n.subscribe(all_targets[models[id].target_id].topic, 10, &Agent::goalPoseCallback, this);
-        std::cout << "Subscribed to " << all_targets[new_target].topic << std::endl;
+     //   std::cout << "Subscribed to " << all_targets[new_target].topic << std::endl;
     }
     /*
         // publish my ready flag
