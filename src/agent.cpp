@@ -188,6 +188,7 @@ void Agent::broadcast()
     msg.agent_id = id;
     msg.ready = ready;
     msg.target_id = models[id].target_id;
+    std::cout << "\t\t["<< msg.target_id <<"]]\n";
     msg.attrition_estimate = models[id].attrition_estimate;
     msg.effectiveness = models[id].effectiveness;
     // This commented out section is for the daisy chaining of messages, which may or may not be implemented eventually
