@@ -317,9 +317,9 @@ void Agent::decision_function()
             result_pk[models[id].target_id] = 1.0f - (1.0f- result_pk[models[id].target_id])/(1.0f-effectiveness[models[id].target_id]+effectiveness[models[id].target_id]*models[id].attrition_estimate);
             result_pk[t] = 1.0f - (1.0f-result_pk[t])*(1.0f - effectiveness[t]+effectiveness[t]*tmp_attrition);
             std::cout << "Goal "<< t << " Plan: " << result_pk[0] << "  " <<result_pk[1] << "  "  << result_pk[2] << std::endl;
-            std::cout << "Target of Bot:0 " << models[0].target_id << " Target of Bot1: " << models[1].target_id << std::endl;
-
             plan_cost = cost_function(result_pk); // or: cost_function(result_pk); //cost_function_tiers(result_pk);
+            std::cout << "Target of Bot:0 " << models[0].target_id << " Target of Bot1: " << models[1].target_id  << " for cost of " << plan_cost<< std::endl;
+
             if (plan_cost < min_cost)
             {
                 min_cost = plan_cost;
