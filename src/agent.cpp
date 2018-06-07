@@ -104,7 +104,6 @@ void Agent::goalPoseCallback(const geometry_msgs::TransformStamped::ConstPtr &de
 */
 void Agent::ownPositionCallback(const geometry_msgs::TransformStamped::ConstPtr& pose) {
     // location_marker is probably redundant
-    std::cerr << "\t\townPose\n";
     location_marker.x_pos = pose->transform.translation.x;
     location_marker.y_pos = pose->transform.translation.y;
     models[id].position = location_marker;
@@ -150,7 +149,6 @@ void Agent::stateCallback(const wta_demo::StateMsg::ConstPtr& pose) {
         for (unsigned int t=0; t < pk_on_targets.size(); t++) {
             std::cout << pk_on_targets[t] << " ";
         }
-        std::cout << std::endl;
       //std::cout<<"agent ID  "<<pose->agent_id<<std::endl;
       //std::cout<<"models.ready in stateCallback  "<<models[pose->agent_id].ready<<std::endl;
     }
@@ -345,9 +343,9 @@ void Agent::decision_function() {
         models[id].target_id = new_target;
         models[id].attrition_estimate = attrition_estimate(new_target);
         models[id].effectiveness = effectiveness[new_target];
-        std::cerr << "Trying to publish\n";
+        //std::cerr << "Trying to publish\n";
         desired_state.publish(all_targets[new_target].transform);
-        std::cerr << "Published " << new_target << "\n";
+        std::cerr << "Published " << new_target << "at" << all_targets[new_target].transform.transform.translation.x << ", " << all_targets[new_target].transform.transform.translation.y <<"\n";
     }
     /*
         // publish my ready flag
