@@ -75,17 +75,13 @@ int main(int argc, char **argv)
         NUM_BOTS= 2;
         std::cout <<"Couldn't get num_bots, setting default..." <<std::endl;
     }
-    std::cout << "Params fetched\n";
     NUM_GOALS = 2;
     NUM_BOTS = 2;  //NOT SURE HOW I"M GONNA DO THIS
     std::string tmp = BOT_ID.substr(BOT_ID.length()-1,1);
-    std::cout << "About to create agent\n";
     Agent agent(n,n_private,atoi(tmp.c_str()),NUM_GOALS,NUM_BOTS);
-    std::cout << "Agent created\n";
     ros::Rate loop_rate(10);
     while (ros::ok())
     {
-
         agent.broadcast();
 //        agent.desired_state.publish(agent.desired_state_msg);
 //        std::cout<<"ready"<<agent.ready<<std::endl;  //

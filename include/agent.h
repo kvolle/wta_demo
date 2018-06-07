@@ -9,7 +9,7 @@
 #include "ros/subscription.h"
 #include "ros/publisher.h"
 #include "wta_demo/StateMsg.h"
-
+#include "target.h"
 /**
 * @struct Location
 * @details Structure for holding (x,y) of object as floats
@@ -17,23 +17,6 @@
 struct Location {
     float x_pos; /**< Holds the x-axis value of the position */
     float y_pos; /**< Holds the y-axis value of the position */
-};
-/**
- * @brief Target struct
- * @detials Structure for holding information pertaining to a given target
- */
-class Target {
-    public:
-        ros::Subscriber targetTransform;
-        geometry_msgs::TransformStamped transform;
-        float desired_pk=0.0;
-        void transformCallback(const geometry_msgs::TransformStamped::ConstPtr &msg) {
-            transform = *msg;
-        }
-
-        Target(ros::NodeHandle nh, std::string t, float pk): desired_pk(pk){
-            targetTransform = nh.subscribe(t, 10, &Target::transformCallback, this);
-        }
 };
 
 /**

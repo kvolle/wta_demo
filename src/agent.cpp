@@ -39,7 +39,8 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int _id,int target_n
 //            all_targets[0].StateSubscriber = n.subscribe("/bot/ned/pose",10,&Target::stateCallback,&all_targets[0]);
 
     float desired=0.;  // Desired Pk
-    all_targets.push_back(Target(m_n, "bot/ned/pose",desired));  // Initialize null target
+    all_targets.push_back(Target(m_n,desired)); // Initialize null target
+    all_targets.back().subscribe("bot/ned/pose");
     for(int t=1;t<=num_targets;t++) {  // from 1 to num_targets because goal0 is for null target
         //subscribe to goal pose
         std::ostringstream target_id;
@@ -52,7 +53,8 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int _id,int target_n
             std::cerr << "Parameter was not found: Pk_d of " << name_goal << std::endl;
         }
         std::cout << "\t&&&&" << m_poseTopic << " " << desired << "\n";
-        all_targets.push_back(Target(m_n, m_poseTopic, desired));
+        all_targets.push_back(Target(m_n, desired));
+        all_targets.back().subscribe( m_poseTopic);
         //all_targets[t+1].StateSubscriber = n.subscribe(m_poseTopic,10,&Target::stateCallback,&all_targets[t+1]);
     }
     Model tmp_model;
@@ -88,7 +90,7 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int _id,int target_n
     //subscribeToTopic(this->goalPoseSubscriber, all_targets[this->target_id].topic, &goalPoseCallback);
 }
 void Agent::goalPoseCallback(const geometry_msgs::TransformStamped::ConstPtr &desired_pose) {
-    std::cout<<"GoalPose\n";
+    std::cerr<<"\t\tGoalPose\n";
     desired_state_msg = *desired_pose;
     desired_state.publish(desired_state_msg);
 }
@@ -102,6 +104,7 @@ void Agent::goalPoseCallback(const geometry_msgs::TransformStamped::ConstPtr &de
 */
 void Agent::ownPositionCallback(const geometry_msgs::TransformStamped::ConstPtr& pose) {
     // location_marker is probably redundant
+    std::cerr << "\t\townPose\n";
     location_marker.x_pos = pose->transform.translation.x;
     location_marker.y_pos = pose->transform.translation.y;
     models[id].position = location_marker;
@@ -127,6 +130,8 @@ Agent::~Agent()
 */
 void Agent::stateCallback(const wta_demo::StateMsg::ConstPtr& pose) {
     // This function should only be used for receiving messages that this bot didn't publish
+    /*std::cerr << "Callback - ";
+    std::cerr << pose->agent_id << "\n";*/
     if (pose->agent_id != id)
     {
         models[pose->agent_id].position.x_pos= pose->x_state;
@@ -301,8 +306,7 @@ void Agent::simulated_annealing()
  * @details This function takes considers the results of this agent changing targets unilaterally and selects the target that
  * results in the best possible choice assuming no other agents change their targets.  KYLE FIX.
  */
-void Agent::decision_function()
-{
+void Agent::decision_function() {
     // First check that all surviving agents are in full mode
     bool ready_check = ready;
     for (uint a=0;a<num_agents;a++) {
@@ -341,7 +345,9 @@ void Agent::decision_function()
         models[id].target_id = new_target;
         models[id].attrition_estimate = attrition_estimate(new_target);
         models[id].effectiveness = effectiveness[new_target];
+        std::cerr << "Trying to publish\n";
         desired_state.publish(all_targets[new_target].transform);
+        std::cerr << "Published " << new_target << "\n";
     }
     /*
         // publish my ready flag
