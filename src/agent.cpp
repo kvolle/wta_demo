@@ -39,7 +39,7 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int _id,int target_n
 //            all_targets[0].StateSubscriber = n.subscribe("/bot/ned/pose",10,&Target::stateCallback,&all_targets[0]);
 
     float desired=0.;  // Desired Pk
-    all_targets.push_back(Target("bot/ned/pose",desired));  // Initialize null target
+    all_targets.push_back(Target(m_n, "bot/ned/pose",desired));  // Initialize null target
     for(int t=1;t<=num_targets;t++) {  // from 1 to num_targets because goal0 is for null target
         //subscribe to goal pose
         std::ostringstream target_id;
@@ -52,7 +52,7 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int _id,int target_n
             std::cerr << "Parameter was not found: Pk_d of " << name_goal << std::endl;
         }
         std::cout << "\t&&&&" << m_poseTopic << " " << desired << "\n";
-        all_targets.push_back(Target(m_poseTopic, desired));
+        all_targets.push_back(Target(m_n, m_poseTopic, desired));
         //all_targets[t+1].StateSubscriber = n.subscribe(m_poseTopic,10,&Target::stateCallback,&all_targets[t+1]);
     }
     Model tmp_model;
@@ -86,7 +86,6 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int _id,int target_n
     pk_from_model();
     max_cost = cost_function(pk_on_targets);
     //subscribeToTopic(this->goalPoseSubscriber, all_targets[this->target_id].topic, &goalPoseCallback);
-    //goalPoseSubscriber = m_n.subscribe(all_targets[models[id].target_id].topic, 10, &Agent::goalPoseCallback, this);
 }
 void Agent::goalPoseCallback(const geometry_msgs::TransformStamped::ConstPtr &desired_pose) {
     std::cout<<"GoalPose\n";
@@ -342,9 +341,7 @@ void Agent::decision_function()
         models[id].target_id = new_target;
         models[id].attrition_estimate = attrition_estimate(new_target);
         models[id].effectiveness = effectiveness[new_target];
-     //   std::cout << "~~~~~~~~~~~~~~~~~~~~  " << all_targets[models[id].target_id].topic << "\n";
-        goalPoseSubscriber = m_n.subscribe(all_targets[models[id].target_id].topic, 10, &Agent::goalPoseCallback, this);
-     //   std::cout << "Subscribed to " << all_targets[new_target].topic << std::endl;
+        desired_state.publish(all_targets[new_target].transform);
     }
     /*
         // publish my ready flag

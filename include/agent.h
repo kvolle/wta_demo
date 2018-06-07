@@ -22,10 +22,18 @@ struct Location {
  * @brief Target struct
  * @detials Structure for holding information pertaining to a given target
  */
-struct Target {
-    std::string topic;
-    float desired_pk=0.0;
-    Target(std::string t, float pk):topic(t), desired_pk(pk){}
+class Target {
+    public:
+        ros::Subscriber targetTransform;
+        geometry_msgs::TransformStamped transform;
+        float desired_pk=0.0;
+        void transformCallback(const geometry_msgs::TransformStamped::ConstPtr &msg) {
+            transform = *msg;
+        }
+
+        Target(ros::NodeHandle nh, std::string t, float pk): desired_pk(pk){
+            targetTransform = nh.subscribe(t, 10, &Target::transformCallback, this);
+        }
 };
 
 /**
