@@ -5,7 +5,7 @@
 	<!--Launch File Specifier -->
 	<rosparam command="load" file="$(find wta_demo)/config/scenario.yaml"/>
 	<group ns="$(arg name)">
-		<node pkg="wta_demo" type="wta_demo" name="agent" output="log">
+		<node pkg="wta_demo" type="wta_demo" name="agent" output="log" respawn="true">
 
 		<!-- Instructions:-->			
 		<!-- Enter three parameters into the following fields: 
