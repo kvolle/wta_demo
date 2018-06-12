@@ -345,7 +345,7 @@ void Agent::decision_function() {
         models[id].effectiveness = effectiveness[new_target];
         //std::cerr << "Trying to publish\n";
         desired_state.publish(all_targets[new_target].transform);
-        std::cerr << "Published " << new_target << "at" << all_targets[new_target].transform.transform.translation.x << ", " << all_targets[new_target].transform.transform.translation.y <<"\n";
+        //std::cerr << "Published " << new_target << "at" << all_targets[new_target].transform.transform.translation.x << ", " << all_targets[new_target].transform.transform.translation.y <<"\n";
     }
     /*
         // publish my ready flag
