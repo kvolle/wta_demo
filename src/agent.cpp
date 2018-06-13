@@ -312,13 +312,13 @@ void Agent::decision_function() {
     }
     // This function takes the model made from messages and calculates the Pk
     pk_from_model();
+    std::cout << "Entering ready check\n";
     if(ready_check) {
         float plan_cost, min_cost,tmp_attrition;
         int new_target;
         std::vector<float> result_pk = pk_on_targets;
         new_target= models[id].target_id;
         min_cost = cost_function(result_pk); // cost_function(result_pk) or:cost_function_tiers(result_pk); // changed to without tiers June 09, 2016
-
 
         // Go through each potential target and calculate the cost function for that assignment
         // When this for-loop exits, the minimum cost target will be selected. Will not be worse than current assignment
