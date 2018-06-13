@@ -5,9 +5,9 @@
 		<!-- Bring up ros vrpn node to broadcast agent's location -->
 		<node pkg="ros_vrpn_client" type="ros_vrpn_client" name="bot" args="_vrpn_server_ip:=192.168.1.104" output="screen" required="true"/>
 		<!-- Bring up controller that listens on correct topics -->
-		<include file="$(find bot_pid_kobuki)/launch/kobuki_minimal.launch">
-			<arg name="name" value="$(arg name)"/>
-		</include>
+		<include file="$(find bot_pid_kobuki)/launch/kobuki_minimal.launch"/>
+			<!--<arg name="name" value="$(arg name)"/>
+		</include>-->
 		<node pkg="bot_pid_kobuki" type="bot_pid_kobuki_node" name="bot_pid_kobuki" output="log">
 			<param name="pose_topic" value="bot/nwu/pose"/>
 			<param name="pose_desired_topic" value="desired_state/pose"/>
