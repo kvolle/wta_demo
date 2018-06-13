@@ -328,9 +328,9 @@ void Agent::decision_function() {
             tmp_attrition = attrition_estimate(t);
             result_pk[models[id].target_id] = 1.0f - (1.0f- result_pk[models[id].target_id])/(1.0f-effectiveness[models[id].target_id]+effectiveness[models[id].target_id]*models[id].attrition_estimate);
             result_pk[t] = 1.0f - (1.0f-result_pk[t])*(1.0f - effectiveness[t]+effectiveness[t]*tmp_attrition);
-            //std::cout << "Goal "<< t << " Plan: " << result_pk[0] << "  " <<result_pk[1] << "  "  << result_pk[2] << std::endl;
+            std::cout << "Goal "<< t << " Plan: " << result_pk[0] << "  " <<result_pk[1] << "  "  << result_pk[2] << std::endl;
             plan_cost = cost_function(result_pk); // or: cost_function(result_pk); //cost_function_tiers(result_pk);
-            //std::cout << "Target of Bot:0 " << models[0].target_id << " Target of Bot1: " << models[1].target_id  << " for cost of " << plan_cost<< std::endl;
+            std::cout << "Target of Bot:0 " << models[0].target_id << " Target of Bot1: " << models[1].target_id  << " for cost of " << plan_cost<< std::endl;
 
             if (plan_cost < min_cost)
             {
@@ -338,7 +338,7 @@ void Agent::decision_function() {
                 new_target = t;
             }
          }
-        //printf("Selected target %d with cost of %5.4f\n",new_target,min_cost);
+        printf("Selected target %d with cost of %5.4f\n",new_target,min_cost);
         //actual_goal = all_targets[new_target].location_marker;
         models[id].target_id = new_target;
         models[id].attrition_estimate = attrition_estimate(new_target);
