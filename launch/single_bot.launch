@@ -21,9 +21,3 @@
 	</group>
 </launch>
 
-
-	<!--Launch File Specifier -->
-	<group ns="$(arg name)">
-		
-	</group>
-</launch>
