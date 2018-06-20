@@ -312,7 +312,6 @@ void Agent::decision_function() {
     }
     // This function takes the model made from messages and calculates the Pk
     pk_from_model();
-    std::cout << "Entering ready check\n";
     if(ready_check) {
         float plan_cost, min_cost,tmp_attrition;
         int new_target;
