@@ -1,5 +1,7 @@
 <!---->
 <launch>
+	<arg name="sim"  default="false"/>
+	<arg name="gui" default="true"/>
 	<!-- Load parameters from config file. Agents should get these from param server -->
 	<rosparam command="load" file="$(find wta_demo)/config/scenario.yaml"/>
 
@@ -14,4 +16,13 @@
 		<arg name="x" value="1.0"/>
 		<arg name="y" value="2.0"/>
 	</include>
+	<group if="$(arg sim)">
+		<!-- stuff that will only be evaluated if foo is true -->
+		<include file="$(find gazebo_ros)/launch/empty_world.launch">
+			<arg name="use_sim_time" value="true"/>
+			<arg name="debug" value="false"/>
+			<arg name="gui" value="$(arg gui)" />
+			<arg name="world_name" value="/opt/ros/kinetic/share/turtlebot_gazebo/worlds/empty.world"/>
+		</include>
+	</group>
 </launch>
