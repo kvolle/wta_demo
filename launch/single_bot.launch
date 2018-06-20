@@ -6,7 +6,7 @@
 		<node pkg="ros_vrpn_client" type="ros_vrpn_client" name="bot" args="_vrpn_server_ip:=192.168.1.104" output="screen" required="true"/>
 		
 		<node pkg="bot_pid_kobuki" type="bot_pid_kobuki_node" name="bot_pid_kobuki" output="log">
-			<param name="pose_topic" value="bot/nwu/pose"/>
+			<param name="transform_topic" value="bot/nwu/pose"/>
 			<param name="pose_desired_topic" value="desired_state/pose"/>
 		</node>
 
