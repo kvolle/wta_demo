@@ -1,0 +1,13 @@
+<!-- This launch file was automatically generated. -->
+<launch>
+	<include file="$(find wta_demo)/launch/distributed_sim.launch">
+		<arg name="name" value="robot0"/>
+		<arg name="x" value="-1.0" />
+		<arg name="y" value="0.0" />
+	</include>
+	<include file="$(find wta_demo)/launch/distributed_sim.launch">
+		<arg name="name" value="robot1"/>
+		<arg name="x" value="-1.0" />
+		<arg name="y" value="0.0" />
+	</include>
+</launch>

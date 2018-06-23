@@ -1,0 +1,26 @@
+<!---->
+<launch>
+	<!--bot/nwu/pose, odom_truth -->
+	<arg name="pose" default="odom_truth"/>
+	<arg name="x" default="0.0" />
+	<arg name="y" default="0.0" />
+	<arg name="name"/>
+
+	<group ns="$(arg name)">
+		<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    			<param name="publish_frequency" type="double" value="30.0" />
+  		</node>
+<!--HERE-->
+		<node pkg="bot_pid_kobuki" type="bot_pid_kobuki_node" name="bot_pid_kobuki" output="log">
+			<param name="odom_topic" value="$(arg pose)"/>
+			<param name="pose_desired_topic" value="desired_state/pose"/>
+		</node>
+
+		<!--	<include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml"/>-->
+		<!-- Bring up the wta code -->
+		<node pkg="wta_demo" type="wta_demo" name="agent" output="log" respawn="true">
+			<param name="bot_id" value="$(arg name)" type="str"/>
+		</node>
+		<node pkg="rostopic" type="rostopic" name="hardware_emulator" args="pub mobile_base/events/robot_state kobuki_msgs/RobotStateEvent -- '1'" output="screen" />
+	</group>
+</launch>
