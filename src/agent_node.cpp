@@ -57,26 +57,17 @@ int main(int argc, char **argv)
     /* Get params from launch file */
 
 
-    if (!n_private.getParam("bot_id", BOT_ID))
-    {
+    if (!n_private.getParam("bot_id", BOT_ID)) {
         std::cout <<"Couldn't get bot_id, setting default..." <<std::endl;
         BOT_ID = "robot0";
     }
-
-    if (!n_private.getParam("num_goals", NUM_GOALS))
-    {
-        std::cout <<"Couldn't get num_goals, setting default..." <<std::endl;
-        NUM_GOALS = 2;
+    NUM_BOTS = 0;
+    NUM_GOALS = 0;
+    std::vector<float> eff;
+    while (n_private.getParam("/scenario/effectiveness/robot"+std::to_string(NUM_BOTS), eff)) {
+        NUM_GOALS = eff.size()-1;
+        NUM_BOTS++;
     }
-
-    if (!n_private.getParam("num_bots", NUM_BOTS))
-    {
-        //std::cout <<"Couldn't get num_bots, setting default..." <<std::endl;
-        NUM_BOTS= 2;
-        std::cout <<"Couldn't get num_bots, setting default..." <<std::endl;
-    }
-    NUM_GOALS = 2;
-    NUM_BOTS = 2;  //NOT SURE HOW I"M GONNA DO THIS
     std::string tmp = BOT_ID.substr(BOT_ID.length()-1,1);
     Agent agent(n,n_private,atoi(tmp.c_str()),NUM_GOALS,NUM_BOTS);
     ros::Rate loop_rate(10);
