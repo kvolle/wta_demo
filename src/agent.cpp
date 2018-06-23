@@ -40,7 +40,7 @@ Agent::Agent(ros::NodeHandle& n, ros::NodeHandle& nPrivate, int _id,int target_n
 
     float desired=0.;  // Desired Pk
     all_targets.push_back(Target(m_n,desired)); // Initialize null target
-    all_targets.back().subscribe("bot/ned/pose");
+    all_targets.back().subscribe("bot/ned/pose");  //TODO Fix this for simulation (also is this the right orientation now?)
     for(int t=1;t<=num_targets;t++) {  // from 1 to num_targets because goal0 is for null target
         //subscribe to goal pose
         std::ostringstream target_id;
