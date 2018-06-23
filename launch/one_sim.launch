@@ -1,0 +1,13 @@
+<!---->
+<launch>
+
+	<include file="$(find wta_demo)/launch/master.launch">
+		<arg name="sim" value="true"/>
+	</include>
+	<include file="$(find wta_demo)/launch/sim_bot.launch">
+		<arg name="name" value="robot2"/>
+		<arg name="pose" value="odom_truth"/>
+		<arg name="x" value="0.0" />
+		<arg name="y" value="0.0" />
+	</include>
+</launch>
